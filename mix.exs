@@ -2,7 +2,7 @@ defmodule MiaClient.Mixfile do
   use Mix.Project
 
   def project do
-    [ app: :elixir,
+    [ app: :mia_client,
       version: "0.0.1",
       elixir: "~> 0.10.1-dev",
       deps: deps ]
