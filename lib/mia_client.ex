@@ -30,7 +30,7 @@ defmodule MiaClient do
     send incoming, "JOIN;#{rest}"
   end
 
-  defp handle(incoming, op, rest) do
+  defp handle(_incoming, op, rest) do
     IO.puts "Unhandled op: #{op} #{inspect rest}"
   end
 end
