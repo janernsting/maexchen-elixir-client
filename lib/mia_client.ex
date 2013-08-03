@@ -30,6 +30,16 @@ defmodule MiaClient do
     send incoming, "JOIN;#{rest}"
   end
 
+  defp handle(incoming, "YOUR TURN", [token]) do
+    IO.puts "My turn: #{token}"
+    send incoming, "ROLL;#{token}"
+  end
+
+  defp handle(incoming, "ROLLED", [dice | rest]) do
+    [ token | _ ] = rest
+    send incoming, "ANNOUNCE;#{dice};#{token}"
+  end
+
   defp handle(_incoming, op, rest) do
     IO.puts "Unhandled op: #{op} #{inspect rest}"
   end
