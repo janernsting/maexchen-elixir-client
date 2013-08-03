@@ -1,7 +1,7 @@
 defmodule MiaClient do
   def start() do
     incoming = Socket.UDP.open!
-    send(incoming, "REGISTER;jan")
+    send(incoming, "REGISTER;janernsting")
     run(incoming)
   end
 
