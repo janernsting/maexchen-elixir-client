@@ -6,7 +6,7 @@ defmodule MiaClient do
   end
 
   defp send(incoming, value) do
-    Socket.UDP.send!("127.0.0.1", 9000, value, incoming)
+    Socket.UDP.send!("192.168.252.34", 9000, value, incoming)
   end
 
   defp run(incoming) do
