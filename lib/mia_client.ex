@@ -35,8 +35,7 @@ defmodule MiaClient do
     send incoming, "ROLL;#{token}"
   end
 
-  defp handle(incoming, "ROLLED", [dice | rest]) do
-    [ token | _ ] = rest
+  defp handle(incoming, "ROLLED", [dice | [ token | _]]) do
     send incoming, "ANNOUNCE;#{dice};#{token}"
   end
 
