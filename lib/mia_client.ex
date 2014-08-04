@@ -1,22 +1,22 @@
 defmodule MiaClient do
   def start() do
     incoming = Socket.UDP.open!
-    send(incoming, "REGISTER;janernsting")
+    send_msg(incoming, "REGISTER;janernsting")
     run(incoming)
   end
 
-  defp send(incoming, value) do
-    Socket.UDP.send!("192.168.252.34", 9000, value, incoming)
+  defp send_msg(incoming, value) do
+    Socket.Datagram.send(incoming, value, { "127.0.0.1", 9000 })
   end
 
   defp run(incoming) do
-    msg = recv incoming
+    msg = recv_msg incoming
     handle incoming, msg
     run incoming
   end
 
-  defp recv(incoming) do
-    {msg, _ } = incoming.recv!
+  defp recv_msg(incoming) do
+    { :ok, { msg, _ } } = Socket.Datagram.recv incoming
     msg
   end
 
@@ -27,16 +27,16 @@ defmodule MiaClient do
 
   defp handle(incoming, "ROUND STARTING", rest) do
     IO.puts "Round starting: #{rest}"
-    send incoming, "JOIN;#{rest}"
+    send_msg incoming, "JOIN;#{rest}"
   end
 
   defp handle(incoming, "YOUR TURN", [token]) do
     IO.puts "My turn: #{token}"
-    send incoming, "ROLL;#{token}"
+    send_msg incoming, "ROLL;#{token}"
   end
 
   defp handle(incoming, "ROLLED", [dice | [ token | _]]) do
-    send incoming, "ANNOUNCE;#{dice};#{token}"
+    send_msg incoming, "ANNOUNCE;#{dice};#{token}"
   end
 
   defp handle(_incoming, op, rest) do
